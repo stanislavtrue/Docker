@@ -436,13 +436,13 @@ public class CreateProductTest
 - - - 
 ## Перевірка
 - **Запуск**  
-![](https://github.com/user-attachments/assets/be8aa105-5b81-42ff-88fd-f818452e682f)
-![](https://github.com/user-attachments/assets/a44933e9-07bf-4a85-8321-b498477ac024)
-![](https://github.com/user-attachments/assets/54c3ce6c-79bc-42dc-86fa-db996ffb14dd)
-![](https://github.com/user-attachments/assets/b1084c68-85ef-40e1-9db6-eda14df55254)
+![](https://github.com/user-attachments/assets/fb5d0b7e-225c-4811-a5d4-ca51416aaa28)
+![](https://github.com/user-attachments/assets/7278749f-e21d-4386-ba0e-bee68ce7f611)
+![](https://github.com/user-attachments/assets/f464ad09-088a-4bb7-bd4d-c3f7ed26aea7)
+![](https://github.com/user-attachments/assets/62b7e69b-590c-4a9b-80ac-98ab59b7cd03)
 - `curl localhost:8080/health`    
-![](https://github.com/user-attachments/assets/522e5ed4-5c0b-4d53-9ac3-5bbb36a0ff07)
+![](https://github.com/user-attachments/assets/b026bbce-5e08-423a-a764-d282f7e2502e)
 - `curl -X POST localhost:8080/products -H 'Content-Type: application/json' -d '{"name":"Desk","price":199.9}'`  
-![](https://github.com/user-attachments/assets/e5d8dc41-425c-46a7-96b3-6aad275a60e2)
+![](https://github.com/user-attachments/assets/f4b57bbf-933d-4906-86f9-317478119c3e)
 - `curl localhost:8080/products`  
-![](https://github.com/user-attachments/assets/c607eb7a-35f5-4a2e-954a-6d24f6167f30)
+![](https://github.com/user-attachments/assets/4f54d7ba-5eb2-4ad0-9f1f-d08110e795c0)
