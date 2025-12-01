@@ -50,7 +50,7 @@ Monolith/
 ```
 - - - 
 ### .env.example
-```.env.example
+```env
 DB_HOST=db
 DB_PORT=5432
 DB_NAME=shop
