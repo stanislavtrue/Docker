@@ -1,0 +1,55 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "8080:8080"
+    env_file:
+      - .env.example
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - PORT=${PORT}
+    depends_on:
+      - db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s 
+      retries: 3
+  db:
+    image: docker.io/library/postgres:16
+    restart: always
+    environment:
+      - POSTGRES_DB=shop
+      - POSTGRES_USER=shop
+      - POSTGRES_PASSWORD=shop
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./src/Infrastructure/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shop"]
+      interval: 10s 
+      retries: 3
+  tests:
+    image: mcr.microsoft.com/dotnet/sdk:9.0
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    command: bash -c "dotnet test tests/domain/DomainTests.csproj && dotnet test tests/application/ApplicationTests.csproj"
+  redis:
+    image: docker.io/library/redis:7
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 3
+      
+volumes:
+  dbdata:
