@@ -446,3 +446,4 @@ public class CreateProductTest
 ![](https://github.com/user-attachments/assets/f4b57bbf-933d-4906-86f9-317478119c3e)
 - `curl localhost:8080/products`  
 ![](https://github.com/user-attachments/assets/4f54d7ba-5eb2-4ad0-9f1f-d08110e795c0)
+
