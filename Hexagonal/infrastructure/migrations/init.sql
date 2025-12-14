@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS orders (
+    id TEXT PRIMARY KEY,
+    sku TEXT NOT NULL,
+    qty INTEGER NOT NULL CHECK (qty > 0)
+);

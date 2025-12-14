@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "iDpBhx5xXNM=",
+  "success": true,
+  "projectFilePath": "/home/user/projects/CSharp/Hexagonal/core/Usecases/Usecases.csproj",
+  "expectedPackageFiles": [
+    "/home/user/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.9/microsoft.aspnetcore.app.ref.9.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}

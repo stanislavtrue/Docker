@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\core\Ports\Ports.csproj" />
+    <ProjectReference Include="..\..\core\Usecases\Usecases.csproj" />
+    <ProjectReference Include="..\DB\db.csproj" />
+    <ProjectReference Include="..\File\file.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>
