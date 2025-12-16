@@ -14,7 +14,7 @@
 - **PostgreSQL 16**
 ---
 ### Структура проєкту
-```cmd
+```console
 Hexagonal/
 ├── core/
 │   ├── Domain/
