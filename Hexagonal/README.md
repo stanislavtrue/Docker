@@ -165,6 +165,7 @@ public class GetOrder
 ```
 ---
 ### PostgresOrderRepository.cs
+> Реалізує `IOrderRepository` для **PostgreSQL*
 ```csharp
 public class PostgresOrderRepository : IOrderRepository
 {
