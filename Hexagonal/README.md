@@ -124,8 +124,8 @@ public sealed record Order(OrderId Id, string Sku, int Qty);
 ```
 ---
 ### IOrderRepository.cs
-> - Описує контракт для збереження та читання замовлень
-- Відокремлює домен від конкретної реалізації БД
+> - Описує контракт для збереження та читання замовлень  
+- Відокремлює домен від конкретної реалізації БД  
 - Дозволяє легко змінювати інфраструктуру (Postgres, Csv, тощо)
 ```csharp
 public interface IOrderRepository 
