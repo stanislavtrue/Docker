@@ -165,7 +165,7 @@ public class GetOrder
 ```
 ---
 ### PostgresOrderRepository.cs
-> Реалізує `IOrderRepository` для **PostgreSQL*
+> Реалізує `IOrderRepository` для **PostgreSQL**
 ```csharp
 public class PostgresOrderRepository : IOrderRepository
 {
@@ -196,6 +196,7 @@ public class PostgresOrderRepository : IOrderRepository
 ```
 ---
 ### CsvOrderRepository.cs
+> `CsvOrderRepository` - це альтернативна інфраструктурна реалізація `IOrderRepository`, яка зберігає замовлення у CSV-файлі замість бази даних.
 ```csharp
 public class CsvOrderRepository : IOrderRepository
 {
