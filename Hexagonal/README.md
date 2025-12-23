@@ -244,3 +244,84 @@ public class CsvOrderRepository : IOrderRepository
     private static string[] SplitCsvLine(string line) => line.Split(',', StringSplitOptions.None).Select(p => p.Trim()).ToArray();
 }
 ```
+---
+### Program.cs
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddEnvironmentVariables();
+var repoAdapter = Environment.GetEnvironmentVariable("REPO_ADAPTER") ?? "db";
+
+if(repoAdapter == "db")
+    builder.Services.AddSingleton<IOrderRepository, PostgresOrderRepository>();
+else if(repoAdapter == "file")
+    builder.Services.AddSingleton<IOrderRepository, CsvOrderRepository>();
+else 
+    throw new Exception("Unknown REPO_ADAPTER. Use 'db' or 'file'.");
+
+builder.Services.AddScoped<CreateOrder>();
+builder.Services.AddScoped<GetOrder>();
+
+var app = builder.Build();
+
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+
+app.MapPost("/orders", async (CreateOrder uc, CreateOrderDto dto) => 
+{
+    try
+    {
+        var id = await uc.ExecuteAsync(dto.Sku, dto.Qty);
+        return Results.Created($"/orders/{id.value}", new { id = id.value });
+    }
+    catch (System.ComponentModel.DataAnnotations.ValidationException ve)
+    {
+        return Results.BadRequest(new { error = ve.Message });
+    }
+});
+app.MapGet("/orders/{id}", async (GetOrder uc, string id) =>
+{
+    var oid = new OrderId(id);
+    var order = await uc.ExecuteAsync(oid);
+    if (order == null) return Results.NotFound();
+    return Results.Ok(new OrderDto(order.Id.value, order.Sku, order.Qty));
+});
+
+app.Run();
+
+public record CreateOrderDto(string Sku, int Qty);
+public record OrderDto(string Id, string Sku, int Qty);
+```
+---
+### init.sql
+```sql
+CREATE TABLE IF NOT EXISTS orders (
+    id TEXT PRIMARY KEY,
+    sku TEXT NOT NULL,
+    qty INTEGER NOT NULL CHECK (qty > 0)
+);
+```
+---
+### CreateOrderTests.cs
+```csharp
+public class CreateOrderTests
+{
+    [Fact]
+    public async Task ThrowsWhenQtyInvalid()
+    {
+        var repo = new Mock<IOrderRepository>();
+        var uc = new CreateOrder(repo.Object);
+        await Assert.ThrowsAsync<ValidationException>(() => uc.ExecuteAsync("ABC", 0));
+    }
+
+    [Fact]
+    public async Task CallsRepo_On_ValidInput()
+    {
+        var repo = new Mock<IOrderRepository>();
+        repo.Setup(r => r.CreateAsync(It.IsAny<Order>(), default)).ReturnsAsync((Order o, System.Threading.CancellationToken _) => o.Id);
+        var uc = new CreateOrder(repo.Object);
+        var id = await uc.ExecuteAsync("ABC", 2);
+        Assert.False(string.IsNullOrWhiteSpace(id.value));
+        repo.Verify(r => r.CreateAsync(It.IsAny<Order>(), default), Times.Once);
+    }
+}
+```
